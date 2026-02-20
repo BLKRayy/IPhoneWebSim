@@ -2,24 +2,42 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>iPhone Web Sim</title>
+  <title>iPhone 16e Web Sim</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div id="iphone">
+    <!-- Dynamic Island -->
+    <div id="dynamicIsland">
+      <div id="di-content">
+        <span id="di-icon">🔔</span>
+        <span id="di-text">Notification</span>
+      </div>
+    </div>
+
+    <!-- Notch area (now more like 16e cutout) -->
     <div id="notch">
       <div id="notch-camera"></div>
       <div id="notch-speaker"></div>
+    </div>
+
+    <!-- Face ID overlay -->
+    <div id="faceIDOverlay">
+      <div id="faceID-circle">
+        <div id="faceID-face">😊</div>
+      </div>
+      <div id="faceID-text">Face ID</div>
+      <div id="faceID-sub">Hold your iPhone up to your face</div>
     </div>
 
     <!-- Lock Screen -->
     <div id="lockScreen" class="screen active">
       <div id="lock-time">9:41</div>
       <div id="lock-date">Friday, February 20</div>
-      <div id="lock-swipe">Swipe up to unlock</div>
+      <div id="lock-swipe">Tap to wake • Face ID</div>
     </div>
 
-    <!-- Passcode Screen -->
+    <!-- Passcode Screen (backup) -->
     <div id="passcodeScreen" class="screen">
       <div id="passcode-title">Enter Passcode</div>
       <div id="passcode-dots">
@@ -52,7 +70,7 @@
           <div class="app" data-app="messages">💬<span>Messages</span></div>
           <div class="app" data-app="camera">📷<span>Camera</span></div>
           <div class="app" data-app="settings">⚙️<span>Settings</span></div>
-          <div class="app" data-app="browser">🌐<span>Browser</span></div>
+          <div class="app" data-app="browser">🌐<span>Safari</span></div>
           <div class="app" data-app="appstore">🛒<span>App Store</span></div>
           <div class="app" data-app="siri">🎙️<span>Siri</span></div>
         </div>
@@ -78,7 +96,7 @@
       </div>
       <div class="messages-thread">
         <div class="bubble received">Hey, this is a fake iMessage.</div>
-        <div class="bubble sent">Looks real enough 👀</div>
+        <div class="bubble sent">Looks like an iPhone 16e 😎</div>
       </div>
       <div class="messages-input">
         <input type="text" id="msgInput" placeholder="iMessage" />
@@ -124,10 +142,10 @@
         <span>Safari</span>
       </div>
       <div class="browser-bar">
-        <input type="text" value="https://apple.com" />
+        <input type="text" value="https://apple.com/iphone-16" />
       </div>
       <div class="browser-content">
-        <p>This is a fake browser. You’re still inside the game 😄</p>
+        <p>This is a fake Safari page about iPhone 16e.</p>
       </div>
     </div>
 
@@ -140,10 +158,10 @@
       <div class="appstore-list">
         <div class="appstore-item">
           <div>
-            <strong>Fake ChatGPT</strong>
-            <p>AI that totally doesn’t run anything.</p>
+            <strong>Dynamic Island Demo</strong>
+            <p>Shows alerts in the island.</p>
           </div>
-          <button class="get-btn" data-install="fakeChatGPT">GET</button>
+          <button class="get-btn" data-install="diDemo">GET</button>
         </div>
         <div class="appstore-item">
           <div>
