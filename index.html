@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>iPhone Web Sim</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="iphone">
+    <div id="notch">
+      <div id="notch-camera"></div>
+      <div id="notch-speaker"></div>
+    </div>
+
+    <!-- Lock Screen -->
+    <div id="lockScreen" class="screen active">
+      <div id="lock-time">9:41</div>
+      <div id="lock-date">Friday, February 20</div>
+      <div id="lock-swipe">Swipe up to unlock</div>
+    </div>
+
+    <!-- Passcode Screen -->
+    <div id="passcodeScreen" class="screen">
+      <div id="passcode-title">Enter Passcode</div>
+      <div id="passcode-dots">
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+        <span class="dot"></span>
+      </div>
+      <div id="passcode-pad">
+        <button class="key" data-num="1">1</button>
+        <button class="key" data-num="2">2</button>
+        <button class="key" data-num="3">3</button>
+        <button class="key" data-num="4">4</button>
+        <button class="key" data-num="5">5</button>
+        <button class="key" data-num="6">6</button>
+        <button class="key" data-num="7">7</button>
+        <button class="key" data-num="8">8</button>
+        <button class="key" data-num="9">9</button>
+        <button class="key empty"></button>
+        <button class="key" data-num="0">0</button>
+        <button class="key" id="key-delete">⌫</button>
+      </div>
+    </div>
+
+    <!-- Home Screen Pages Wrapper -->
+    <div id="homeWrapper" class="screen">
+      <div id="homePages">
+        <!-- Page 1 -->
+        <div class="homePage active" data-page="1">
+          <div class="app" data-app="messages">💬<span>Messages</span></div>
+          <div class="app" data-app="camera">📷<span>Camera</span></div>
+          <div class="app" data-app="settings">⚙️<span>Settings</span></div>
+          <div class="app" data-app="browser">🌐<span>Browser</span></div>
+          <div class="app" data-app="appstore">🛒<span>App Store</span></div>
+          <div class="app" data-app="siri">🎙️<span>Siri</span></div>
+        </div>
+
+        <!-- Page 2 -->
+        <div class="homePage" data-page="2">
+          <div class="app" data-app="music">🎵<span>Music</span></div>
+          <div class="app" data-app="photos">🖼️<span>Photos</span></div>
+          <div class="app" data-app="notes">📝<span>Notes</span></div>
+        </div>
+      </div>
+      <div id="pageDots">
+        <span class="pageDot active" data-page="1"></span>
+        <span class="pageDot" data-page="2"></span>
+      </div>
+    </div>
+
+    <!-- Fake Messages App -->
+    <div id="messagesApp" class="appScreen">
+      <div class="app-header">
+        <button class="back-btn" data-back="home">‹</button>
+        <span>Messages</span>
+      </div>
+      <div class="messages-thread">
+        <div class="bubble received">Hey, this is a fake iMessage.</div>
+        <div class="bubble sent">Looks real enough 👀</div>
+      </div>
+      <div class="messages-input">
+        <input type="text" id="msgInput" placeholder="iMessage" />
+        <button id="msgSend">↑</button>
+      </div>
+    </div>
+
+    <!-- Fake Settings App -->
+    <div id="settingsApp" class="appScreen">
+      <div class="app-header">
+        <button class="back-btn" data-back="home">‹</button>
+        <span>Settings</span>
+      </div>
+      <div class="settings-list">
+        <div class="setting-item">
+          <span>Wi‑Fi</span>
+          <label class="switch">
+            <input type="checkbox" checked />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <span>Bluetooth</span>
+          <label class="switch">
+            <input type="checkbox" />
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <span>Dark Mode</span>
+          <label class="switch">
+            <input type="checkbox" id="darkModeToggle" />
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fake Browser App -->
+    <div id="browserApp" class="appScreen">
+      <div class="app-header">
+        <button class="back-btn" data-back="home">‹</button>
+        <span>Safari</span>
+      </div>
+      <div class="browser-bar">
+        <input type="text" value="https://apple.com" />
+      </div>
+      <div class="browser-content">
+        <p>This is a fake browser. You’re still inside the game 😄</p>
+      </div>
+    </div>
+
+    <!-- Fake App Store -->
+    <div id="appstoreApp" class="appScreen">
+      <div class="app-header">
+        <button class="back-btn" data-back="home">‹</button>
+        <span>App Store</span>
+      </div>
+      <div class="appstore-list">
+        <div class="appstore-item">
+          <div>
+            <strong>Fake ChatGPT</strong>
+            <p>AI that totally doesn’t run anything.</p>
+          </div>
+          <button class="get-btn" data-install="fakeChatGPT">GET</button>
+        </div>
+        <div class="appstore-item">
+          <div>
+            <strong>Retro Snake</strong>
+            <p>Classic snake mini‑game.</p>
+          </div>
+          <button class="get-btn" data-install="snake">GET</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fake Siri -->
+    <div id="siriOverlay">
+      <div id="siri-ball"></div>
+      <div id="siri-text">“What can I help you with?”</div>
+      <input type="text" id="siriInput" placeholder="Type to Siri..." />
+      <button id="siriClose">Close</button>
+    </div>
+
+    <!-- Fake Camera -->
+    <div id="cameraApp" class="appScreen">
+      <div class="app-header">
+        <button class="back-btn" data-back="home">‹</button>
+        <span>Camera</span>
+      </div>
+      <div class="camera-view">
+        <video id="cameraVideo" autoplay playsinline></video>
+      </div>
+      <div class="camera-controls">
+        <button id="cameraShutter">●</button>
+      </div>
+    </div>
+
+    <!-- Control Center -->
+    <div id="controlCenter">
+      <div class="cc-row">
+        <div class="cc-tile">📶</div>
+        <div class="cc-tile">📡</div>
+        <div class="cc-tile">🔔</div>
+        <div class="cc-tile">🛜</div>
+      </div>
+      <div class="cc-row">
+        <div class="cc-slider">
+          <span>🔆</span>
+          <input type="range" min="0" max="100" value="70" />
+        </div>
+      </div>
+      <button id="ccClose">Close</button>
+    </div>
+
+    <!-- Home bar & CC gesture area -->
+    <div id="homeBar"></div>
+    <div id="ccHandle"></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
