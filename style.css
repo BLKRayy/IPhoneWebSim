@@ -1,0 +1,545 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+#iphone {
+  width: 360px;
+  height: 740px;
+  background: #000;
+  border-radius: 40px;
+  border: 10px solid #222;
+  position: relative;
+  overflow: hidden;
+  color: #fff;
+}
+
+/* Notch */
+#notch {
+  width: 180px;
+  height: 32px;
+  background: #000;
+  border-radius: 0 0 20px 20px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+}
+
+#notch-camera {
+  width: 10px;
+  height: 10px;
+  background: #111;
+  border-radius: 50%;
+}
+
+#notch-speaker {
+  width: 60px;
+  height: 6px;
+  background: #111;
+  border-radius: 3px;
+}
+
+/* Screens */
+.screen {
+  position: absolute;
+  inset: 0;
+  padding-top: 60px;
+  display: none;
+}
+
+.screen.active {
+  display: block;
+}
+
+/* Lock Screen */
+#lockScreen {
+  background: radial-gradient(circle at top, #444, #000);
+  text-align: center;
+}
+
+#lock-time {
+  font-size: 64px;
+  margin-top: 80px;
+}
+
+#lock-date {
+  margin-top: 8px;
+  opacity: 0.8;
+}
+
+#lock-swipe {
+  position: absolute;
+  bottom: 80px;
+  width: 100%;
+  text-align: center;
+  opacity: 0.7;
+}
+
+/* Passcode */
+#passcodeScreen {
+  background: #000;
+  text-align: center;
+}
+
+#passcode-title {
+  margin-top: 40px;
+  font-size: 20px;
+}
+
+#passcode-dots {
+  margin-top: 20px;
+}
+
+#passcode-dots .dot {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid #888;
+  margin: 0 6px;
+}
+
+#passcode-dots .dot.filled {
+  background: #fff;
+}
+
+#passcode-pad {
+  margin: 40px auto 0;
+  width: 70%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.key {
+  background: #222;
+  border-radius: 999px;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  padding: 14px 0;
+}
+
+.key.empty {
+  background: transparent;
+}
+
+/* Home Screen */
+#homeWrapper {
+  background: linear-gradient(160deg, #1b1b3a, #111);
+}
+
+#homePages {
+  height: calc(100% - 80px);
+  overflow: hidden;
+  position: relative;
+}
+
+.homePage {
+  position: absolute;
+  inset: 0;
+  padding: 80px 20px 40px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  opacity: 0;
+  transform: translateX(100%);
+  transition: 0.3s;
+}
+
+.homePage.active {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.app {
+  width: 64px;
+  height: 64px;
+  background: #444;
+  border-radius: 18px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 26px;
+  cursor: pointer;
+  position: relative;
+}
+
+.app span {
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+/* Page dots */
+#pageDots {
+  position: absolute;
+  bottom: 70px;
+  width: 100%;
+  text-align: center;
+}
+
+.pageDot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #555;
+  margin: 0 4px;
+}
+
+.pageDot.active {
+  background: #fff;
+}
+
+/* App Screens */
+.appScreen {
+  position: absolute;
+  inset: 0;
+  background: #111;
+  display: none;
+  padding-top: 60px;
+}
+
+.appScreen.active {
+  display: block;
+}
+
+.app-header {
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 8px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  color: #0af;
+  font-size: 24px;
+}
+
+/* Messages */
+.messages-thread {
+  position: absolute;
+  top: 80px;
+  bottom: 60px;
+  left: 10px;
+  right: 10px;
+  overflow-y: auto;
+}
+
+.bubble {
+  max-width: 70%;
+  padding: 8px 12px;
+  border-radius: 16px;
+  margin: 6px 0;
+  font-size: 14px;
+}
+
+.bubble.received {
+  background: #333;
+  align-self: flex-start;
+}
+
+.bubble.sent {
+  background: #0a84ff;
+  align-self: flex-end;
+  margin-left: auto;
+}
+
+.messages-input {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+#msgInput {
+  flex: 1;
+  border-radius: 20px;
+  border: none;
+  padding: 8px 12px;
+}
+
+#msgSend {
+  width: 40px;
+  border-radius: 20px;
+  border: none;
+  background: #0a84ff;
+  color: #fff;
+}
+
+/* Settings */
+.settings-list {
+  margin-top: 80px;
+}
+
+.setting-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border-bottom: 1px solid #333;
+}
+
+/* Switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 44px;
+  height: 24px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  inset: 0;
+  background-color: #555;
+  border-radius: 24px;
+  transition: 0.2s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  border-radius: 50%;
+  transition: 0.2s;
+}
+
+.switch input:checked + .slider {
+  background-color: #0a84ff;
+}
+
+.switch input:checked + .slider:before {
+  transform: translateX(20px);
+}
+
+/* Browser */
+.browser-bar {
+  margin-top: 80px;
+  padding: 0 10px;
+}
+
+.browser-bar input {
+  width: 100%;
+  border-radius: 12px;
+  border: none;
+  padding: 6px 10px;
+  font-size: 12px;
+}
+
+.browser-content {
+  padding: 20px;
+  font-size: 14px;
+}
+
+/* App Store */
+.appstore-list {
+  margin-top: 80px;
+}
+
+.appstore-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  border-bottom: 1px solid #333;
+}
+
+.get-btn {
+  border-radius: 16px;
+  border: none;
+  padding: 6px 12px;
+  background: #0a84ff;
+  color: #fff;
+}
+
+/* Siri */
+#siriOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at bottom, #0a84ff, #000);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  gap: 16px;
+}
+
+#siri-ball {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, #0ff, #f0f, #0ff);
+  animation: spin 3s linear infinite;
+}
+
+#siriInput {
+  width: 70%;
+  border-radius: 20px;
+  border: none;
+  padding: 8px 12px;
+}
+
+#siriClose {
+  border-radius: 20px;
+  border: none;
+  padding: 6px 16px;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Camera */
+.camera-view {
+  position: absolute;
+  top: 80px;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  background: #000;
+}
+
+#cameraVideo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.camera-controls {
+  position: absolute;
+  bottom: 40px;
+  width: 100%;
+  text-align: center;
+}
+
+#cameraShutter {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  background: transparent;
+}
+
+/* Control Center */
+#controlCenter {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -260px;
+  height: 260px;
+  background: rgba(20, 20, 20, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 16px;
+  transition: 0.25s;
+  color: #fff;
+}
+
+#controlCenter.active {
+  top: 0;
+}
+
+.cc-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.cc-tile {
+  flex: 1;
+  background: #333;
+  border-radius: 16px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cc-slider {
+  flex: 1;
+  background: #333;
+  border-radius: 16px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cc-slider input {
+  flex: 1;
+}
+
+#ccClose {
+  margin-top: 10px;
+  width: 100%;
+  border-radius: 16px;
+  border: none;
+  padding: 6px 0;
+}
+
+/* Home bar & CC handle */
+#homeBar {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 4px;
+  border-radius: 999px;
+  background: #fff;
+  opacity: 0.7;
+}
+
+#ccHandle {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  border-radius: 999px;
+  background: #555;
+  opacity: 0.7;
+}
+
+/* Dark mode toggle effect */
+body.dark #iphone {
+  background: #000;
+}
