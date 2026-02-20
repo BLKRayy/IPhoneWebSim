@@ -3,7 +3,7 @@
 }
 
 body {
-  background: #111;
+  background: radial-gradient(circle at top, #1b1b3a, #050509);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,24 +13,66 @@ body {
 }
 
 #iphone {
-  width: 360px;
-  height: 740px;
+  width: 380px;
+  height: 780px;
   background: #000;
-  border-radius: 40px;
-  border: 10px solid #222;
+  border-radius: 46px;
+  border: 10px solid #111;
   position: relative;
   overflow: hidden;
   color: #fff;
+  box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
 }
 
-/* Notch */
+/* Dynamic Island */
+#dynamicIsland {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  height: 36px;
+  min-width: 120px;
+  max-width: 220px;
+  background: #000;
+  border-radius: 999px;
+  border: 1px solid #222;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  opacity: 0.9;
+  transition: all 0.25s ease;
+  pointer-events: none;
+}
+
+#dynamicIsland.expanded {
+  height: 60px;
+  max-width: 260px;
+}
+
+#di-content {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+#di-icon {
+  font-size: 18px;
+}
+
+#di-text {
+  white-space: nowrap;
+}
+
+/* Notch / cutout */
 #notch {
-  width: 180px;
+  width: 200px;
   height: 32px;
   background: #000;
-  border-radius: 0 0 20px 20px;
+  border-radius: 20px;
   position: absolute;
-  top: 0;
+  top: 8px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -57,7 +99,7 @@ body {
 .screen {
   position: absolute;
   inset: 0;
-  padding-top: 60px;
+  padding-top: 80px;
   display: none;
 }
 
@@ -72,8 +114,8 @@ body {
 }
 
 #lock-time {
-  font-size: 64px;
-  margin-top: 80px;
+  font-size: 70px;
+  margin-top: 90px;
 }
 
 #lock-date {
@@ -83,10 +125,61 @@ body {
 
 #lock-swipe {
   position: absolute;
-  bottom: 80px;
+  bottom: 90px;
   width: 100%;
   text-align: center;
   opacity: 0.7;
+  font-size: 14px;
+}
+
+/* Face ID overlay */
+#faceIDOverlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0, 200, 255, 0.2), #000);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  gap: 16px;
+}
+
+#faceID-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #0af;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: faceID-pulse 1.4s infinite;
+}
+
+#faceID-face {
+  font-size: 48px;
+}
+
+#faceID-text {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+#faceID-sub {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+@keyframes faceID-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 170, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 20px rgba(0, 170, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 170, 255, 0);
+  }
 }
 
 /* Passcode */
@@ -140,11 +233,11 @@ body {
 
 /* Home Screen */
 #homeWrapper {
-  background: linear-gradient(160deg, #1b1b3a, #111);
+  background: linear-gradient(160deg, #1b1b3a, #050509);
 }
 
 #homePages {
-  height: calc(100% - 80px);
+  height: calc(100% - 90px);
   overflow: hidden;
   position: relative;
 }
@@ -152,7 +245,7 @@ body {
 .homePage {
   position: absolute;
   inset: 0;
-  padding: 80px 20px 40px;
+  padding: 100px 24px 40px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 18px;
@@ -169,7 +262,7 @@ body {
 .app {
   width: 64px;
   height: 64px;
-  background: #444;
+  background: linear-gradient(145deg, #555, #222);
   border-radius: 18px;
   display: flex;
   flex-direction: column;
@@ -178,6 +271,7 @@ body {
   font-size: 26px;
   cursor: pointer;
   position: relative;
+  box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
 }
 
 .app span {
@@ -188,7 +282,7 @@ body {
 /* Page dots */
 #pageDots {
   position: absolute;
-  bottom: 70px;
+  bottom: 80px;
   width: 100%;
   text-align: center;
 }
@@ -212,7 +306,7 @@ body {
   inset: 0;
   background: #111;
   display: none;
-  padding-top: 60px;
+  padding-top: 80px;
 }
 
 .appScreen.active {
@@ -221,7 +315,7 @@ body {
 
 .app-header {
   position: absolute;
-  top: 40px;
+  top: 50px;
   left: 0;
   right: 0;
   height: 40px;
@@ -241,11 +335,13 @@ body {
 /* Messages */
 .messages-thread {
   position: absolute;
-  top: 80px;
-  bottom: 60px;
+  top: 90px;
+  bottom: 70px;
   left: 10px;
   right: 10px;
   overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .bubble {
@@ -269,7 +365,7 @@ body {
 
 .messages-input {
   position: absolute;
-  bottom: 10px;
+  bottom: 14px;
   left: 10px;
   right: 10px;
   display: flex;
@@ -293,7 +389,7 @@ body {
 
 /* Settings */
 .settings-list {
-  margin-top: 80px;
+  margin-top: 90px;
 }
 
 .setting-item {
@@ -349,7 +445,7 @@ body {
 
 /* Browser */
 .browser-bar {
-  margin-top: 80px;
+  margin-top: 90px;
   padding: 0 10px;
 }
 
@@ -368,7 +464,7 @@ body {
 
 /* App Store */
 .appstore-list {
-  margin-top: 80px;
+  margin-top: 90px;
 }
 
 .appstore-item {
@@ -430,8 +526,8 @@ body {
 /* Camera */
 .camera-view {
   position: absolute;
-  top: 80px;
-  bottom: 80px;
+  top: 90px;
+  bottom: 90px;
   left: 0;
   right: 0;
   background: #000;
@@ -517,7 +613,7 @@ body {
 /* Home bar & CC handle */
 #homeBar {
   position: absolute;
-  bottom: 14px;
+  bottom: 18px;
   left: 50%;
   transform: translateX(-50%);
   width: 120px;
@@ -529,7 +625,7 @@ body {
 
 #ccHandle {
   position: absolute;
-  top: 4px;
+  top: 6px;
   left: 50%;
   transform: translateX(-50%);
   width: 80px;
