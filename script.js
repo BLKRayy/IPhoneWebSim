@@ -32,6 +32,10 @@ const msgInput = document.getElementById("msgInput");
 const msgSend = document.getElementById("msgSend");
 const cameraVideo = document.getElementById("cameraVideo");
 const cameraShutter = document.getElementById("cameraShutter");
+const faceIDOverlay = document.getElementById("faceIDOverlay");
+const dynamicIsland = document.getElementById("dynamicIsland");
+const diIcon = document.getElementById("di-icon");
+const diText = document.getElementById("di-text");
 
 // Helper: switch main screens
 function showScreen(name) {
@@ -44,14 +48,26 @@ function showScreen(name) {
   if (name === "home") homeWrapper.classList.add("active");
 }
 
-// Lock screen swipe up (simple click to simulate)
+// Face ID flow
+function startFaceID() {
+  faceIDOverlay.style.display = "flex";
+  showDynamicIsland("🔒", "Face ID scanning…");
+  setTimeout(() => {
+    // Simulate success
+    faceIDOverlay.style.display = "none";
+    showDynamicIsland("✅", "Unlocked with Face ID");
+    showScreen("home");
+  }, 1500);
+}
+
+// Lock screen tap triggers Face ID
 lockScreen.addEventListener("click", () => {
   if (currentScreen === "lock") {
-    showScreen("passcode");
+    startFaceID();
   }
 });
 
-// Passcode input
+// Passcode input (backup if you want to trigger it manually later)
 keys.forEach((key) => {
   key.addEventListener("click", () => {
     if (enteredPasscode.length >= 4) return;
@@ -79,13 +95,15 @@ function checkPasscode() {
     enteredPasscode = "";
     updateDots();
     showScreen("home");
+    showDynamicIsland("✅", "Unlocked");
   } else {
     enteredPasscode = "";
     updateDots();
+    showDynamicIsland("⚠️", "Wrong passcode");
   }
 }
 
-// Home page swipe (simple left/right click on background)
+// Home page swipe
 let startX = null;
 homeWrapper.addEventListener("touchstart", (e) => {
   startX = e.touches[0].clientX;
@@ -103,7 +121,7 @@ homeWrapper.addEventListener("touchend", (e) => {
   startX = null;
 });
 
-// Also allow click on page dots
+// Page dots click
 pageDots.forEach((dot) => {
   dot.addEventListener("click", () => {
     currentPage = parseInt(dot.dataset.page, 10);
@@ -136,13 +154,26 @@ function hideAllApps() {
 
 function openApp(name) {
   hideAllApps();
-  if (name === "messages") messagesApp.classList.add("active");
-  if (name === "settings") settingsApp.classList.add("active");
-  if (name === "browser") browserApp.classList.add("active");
-  if (name === "appstore") appstoreApp.classList.add("active");
+  if (name === "messages") {
+    messagesApp.classList.add("active");
+    showDynamicIsland("💬", "Messages");
+  }
+  if (name === "settings") {
+    settingsApp.classList.add("active");
+    showDynamicIsland("⚙️", "Settings");
+  }
+  if (name === "browser") {
+    browserApp.classList.add("active");
+    showDynamicIsland("🌐", "Safari");
+  }
+  if (name === "appstore") {
+    appstoreApp.classList.add("active");
+    showDynamicIsland("🛒", "App Store");
+  }
   if (name === "camera") {
     cameraApp.classList.add("active");
     startCamera();
+    showDynamicIsland("📷", "Camera");
   }
   if (name === "siri") {
     openSiri();
@@ -171,12 +202,14 @@ msgSend.addEventListener("click", () => {
   thread.appendChild(bubble);
   msgInput.value = "";
   thread.scrollTop = thread.scrollHeight;
+  showDynamicIsland("💬", "New iMessage sent");
 });
 
 // Dark mode toggle
 if (darkModeToggle) {
   darkModeToggle.addEventListener("change", () => {
     document.body.classList.toggle("dark", darkModeToggle.checked);
+    showDynamicIsland("🌙", darkModeToggle.checked ? "Dark Mode On" : "Dark Mode Off");
   });
 }
 
@@ -184,10 +217,12 @@ if (darkModeToggle) {
 function openSiri() {
   siriOverlay.style.display = "flex";
   siriInput.value = "";
+  showDynamicIsland("🎙️", "Siri listening…");
 }
 
 siriClose.addEventListener("click", () => {
   siriOverlay.style.display = "none";
+  showDynamicIsland("🎙️", "Siri closed");
 });
 
 siriInput.addEventListener("keydown", (e) => {
@@ -223,12 +258,16 @@ function toggleCC(force) {
     ccOpen = !ccOpen;
   }
   cc.classList.toggle("active", ccOpen);
+  if (ccOpen) {
+    showDynamicIsland("🔆", "Control Center");
+  }
 }
 
 // Home bar: go home from apps
 homeBar.addEventListener("click", () => {
   hideAllApps();
   stopCamera();
+  showDynamicIsland("⬆️", "Home");
 });
 
 // Camera
@@ -250,7 +289,6 @@ function stopCamera() {
 }
 
 cameraShutter.addEventListener("click", () => {
-  // Just a fake flash effect
   const flash = document.createElement("div");
   flash.style.position = "absolute";
   flash.style.inset = "0";
@@ -259,15 +297,30 @@ cameraShutter.addEventListener("click", () => {
   flash.style.pointerEvents = "none";
   document.getElementById("iphone").appendChild(flash);
   setTimeout(() => flash.remove(), 100);
+  showDynamicIsland("📸", "Photo taken");
 });
 
 // App Store fake installs
 document.querySelectorAll(".get-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     btn.textContent = "OPEN";
+    showDynamicIsland("⬇️", "Installed");
   });
 });
+
+// Dynamic Island helper
+let diTimeout = null;
+function showDynamicIsland(icon, text) {
+  diIcon.textContent = icon;
+  diText.textContent = text;
+  dynamicIsland.classList.add("expanded");
+  if (diTimeout) clearTimeout(diTimeout);
+  diTimeout = setTimeout(() => {
+    dynamicIsland.classList.remove("expanded");
+  }, 2000);
+}
 
 // Initialize
 showScreen("lock");
 updatePages();
+showDynamicIsland("📱", "iPhone 16e Web Sim");
